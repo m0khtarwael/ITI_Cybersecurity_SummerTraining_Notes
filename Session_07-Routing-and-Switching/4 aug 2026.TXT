@@ -1,0 +1,254 @@
+Day 7:
+=====
+1-ACL
+
+Standard    1   99
+
+Source(( IP ,, Device ,, Network))
+
+Extended   100   199
+
+Services or protocol or port  (DNS,, http,, ping , smtp
+
+
+
+Action
+
+Permit
+Deny
+
+
+First match
+
+deny 192.1681.3
+deny 192.168.1.2
+permit all
+
+
+Location:
+=======
+
+Standard   === Close To Destenation
+
+Extended===  Close To source  ((perfered))
+
+
+
+Apply:
+====
+Interface     in   or   out
+
+
+
+Configuration ACL:
+===============
+
+1-Router(config)#acc
+Router(config)#access-list ?
+  <1-99>     IP standard access list
+  <100-199>  IP extended access list
+Router(config)#access-list 1
+% Incomplete command.
+Router(config)#access-list 1 ?
+  deny    Specify packets to reject
+  permit  Specify packets to forward
+  remark  Access list entry comment
+Router(config)#access-list 1 de
+Router(config)#access-list 1 deny 192.168.1.1
+Router(config)#int g0/2
+Router(config-if)#ip acc
+Router(config-if)#ip access-group 1 ?
+  in   inbound packets
+  out  outbound packets
+Router(config-if)#ip access-group 1 o
+Router(config-if)#ip access-group 1 out 
+Router(config-if)#
+
+
+
+
+
+
+
+
+
+
+
+
+
+Router>en
+Router#conf t
+Enter configuration commands, one per line.  End with CNTL/Z.
+Router(config)#acc
+Router(config)#access-list 100 de
+Router(config)#access-list 100 deny ?
+  ahp    Authentication Header Protocol
+  eigrp  Cisco's EIGRP routing protocol
+  esp    Encapsulation Security Payload
+  gre    Cisco's GRE tunneling
+  icmp   Internet Control Message Protocol
+  ip     Any Internet Protocol
+  ospf   OSPF routing protocol
+  tcp    Transmission Control Protocol
+  udp    User Datagram Protocol
+Router(config)#access-list 100 deny t
+Router(config)#access-list 100 deny tcp ?
+  A.B.C.D  Source address
+  any      Any source host
+  host     A single source host
+Router(config)#access-list 100 deny tcp ho
+Router(config)#access-list 100 deny tcp host 192.168.2.1 ?
+  A.B.C.D  Destination address
+  any      Any destination host
+  eq       Match only packets on a given port number
+  gt       Match only packets with a greater port number
+  host     A single destination host
+  lt       Match only packets with a lower port number
+  neq      Match only packets not on a given port number
+  range    Match only packets in the range of port numbers
+Router(config)#access-list 100 deny tcp host 192.168.2.1 hos
+Router(config)#access-list 100 deny tcp host 192.168.2.1 host 192.168.4.1 ?
+  dscp         Match packets with given dscp value
+  eq           Match only packets on a given port number
+  established  established
+  gt           Match only packets with a greater port number
+  lt           Match only packets with a lower port number
+  neq          Match only packets not on a given port number
+  precedence   Match packets with given precedence value
+  range        Match only packets in the range of port numbers
+  <cr>
+Router(config)#access-list 100 deny tcp host 192.168.2.1 host 192.168.4.1 eq ?
+  <0-65535>  Port number
+  ftp        File Transfer Protocol (21)
+  pop3       Post Office Protocol v3 (110)
+  smtp       Simple Mail Transport Protocol (25)
+  telnet     Telnet (23)
+  www        World Wide Web (HTTP, 80)
+Router(config)#access-list 100 deny tcp host 192.168.2.1 host 192.168.4.1 eq 80
+Router(config)#acc
+Router(config)#access-list 100 per
+Router(config)#access-list 100 permit ip any any
+Router(config)#
+Router(config)#int g0/2
+Router(config-if)#ip acc
+Router(config-if)#ip access-group 100 in
+Router(config-if)#
+
+
+Named ACL:
+===========
+Router(config)#ip access-list standard ITI
+Router(config-std-nacl)#?
+  <1-2147483647>  Sequence Number
+  default         Set a command to its defaults
+  deny            Specify packets to reject
+  exit            Exit from access-list configuration mode
+  no              Negate a command or set its defaults
+  permit          Specify packets to forward
+  remark          Access list entry comment
+Router(config-std-nacl)#exi
+Router(config)#
+Router(config)#ip access-list standard ITI
+Router(config-std-nacl)#
+
+
+
+
+
+2-DNS   53        TCP &  UDP
+
+Resolve Name To IP add  ((Fw))
+
+
+
+facebook.com    1.2.3.4
+Google.              1.1.2.2
+
+
+
+
+TLD
+
+
+
+
+com   gov   net   edu  org
+
+
+
+
+Roothint 
+
+
+
+
+13 Machine 
+
+
+
+3-Chapter 4 Security Arch
+
+
+DOS
+
+
+DDOS
+
+Backup config:
+===========
+
+iti#copy run tftp
+Address or name of remote host []? 192.168.2.2
+Destination filename [iti-confg]? 
+
+Writing running-config...!!
+[OK - 923 bytes]
+
+923 bytes copied in 0 secs
+iti#
+
+Restore
+
+
+Router(config)#hostname iti
+iti(config)#do wr
+Building configuration...
+[OK]
+iti(config)#exi
+iti#
+%SYS-5-CONFIG_I: Configured from console by console
+
+iti#copy run tftp
+Address or name of remote host []? 192.168.2.2
+Destination filename [iti-confg]? 
+
+Writing running-config...!!
+[OK - 923 bytes]
+
+923 bytes copied in 0 secs
+iti#conf t
+Enter configuration commands, one per line.  End with CNTL/Z.
+iti(config)#hos
+iti(config)#hostname ssss
+ssss(config)#exi
+ssss#
+%SYS-5-CONFIG_I: Configured from console by console
+
+ssss#copy tftp runn
+Address or name of remote host []? 192.168.2.2
+Source filename []? iti-confg
+Destination filename [running-config]? 
+
+Accessing tftp://192.168.2.2/iti-confg...
+Loading iti-confg from 192.168.2.2: !
+[OK - 923 bytes]
+
+923 bytes copied in 0 secs
+iti#
+%SYS-5-CONFIG_I: Configured from console by console
+
+iti#
+
+
+
+

@@ -1,0 +1,22 @@
+summary challenge
+1-switch1 connect with (server dhcp) with 4 pc,  
+2-make basic config to switch
+       a- hostname Class A
+       b-exec-time 0 
+       c-banner        dont change configuration
+       d- can you access to manage remotly SSH only with user ITI pass 123
+3-dhcp server distrbute 192.168.1.0/24
+
+4-repeat setps above for another 2 network(switch2 and switch3 ).. with configuraion 
+192.168.2.0/24
+hostname ClassB
+192.168.3.0/24
+hostname Class C
+5-connect the 3 network with router
+6-verify connction
+7-replace dhcp servers with dhcp on router
+10-make backup of  IOS and configuration of all network devices on this lab on Backup server.
+11-replace the first switch with new switch and restore config from backup
+12-verify connection whith new switch
+13-make ACL to prevent network 192.168.1.0 from access browser on server 192.168.2.10
+14-make ACL to prevent network 192.168.1.2 from access all services on 192.168.3.0
